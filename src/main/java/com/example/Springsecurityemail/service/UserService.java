@@ -52,4 +52,8 @@ public class UserService implements UserDetailsService {
        confirmationTokenService.saveConfirmationToken(confirmationToken);
         return token;
     }
+
+    public int enableUser(String email) {
+        return userRepository.enableUser(email);
+    }
 }

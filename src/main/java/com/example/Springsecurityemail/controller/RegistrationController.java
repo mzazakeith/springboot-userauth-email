@@ -3,10 +3,7 @@ package com.example.Springsecurityemail.controller;
 import com.example.Springsecurityemail.dto.RegistrationDto;
 import com.example.Springsecurityemail.service.RegistrationService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,5 +17,10 @@ public class RegistrationController {
     @PostMapping
     public String register(@Valid @RequestBody RegistrationDto registrationDto){
         return registrationService.register(registrationDto);
+    }
+
+    @GetMapping("/confirm")
+    public String confirm(@RequestParam("token") String token) {
+        return registrationService.confirmToken(token);
     }
 }
