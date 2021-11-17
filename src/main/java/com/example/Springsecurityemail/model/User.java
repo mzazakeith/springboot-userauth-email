@@ -32,17 +32,15 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
-    public User(String firstname, String lastname, String email, String password, UserRole userRole, Boolean locked, Boolean enabled) {
+    public User(String firstname, String lastname, String email, String password, UserRole userRole) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
-        this.locked = locked;
-        this.enabled = enabled;
     }
 
     @Override

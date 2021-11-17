@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    password: postgres
+    password: password
     url: jdbc:postgresql://localhost:5433/emailauth
-    username: password
+    username: postgres
   jpa:
     hibernate:
       ddl-auto: create-drop

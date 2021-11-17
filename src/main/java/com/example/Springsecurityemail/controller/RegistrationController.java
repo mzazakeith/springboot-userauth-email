@@ -3,9 +3,12 @@ package com.example.Springsecurityemail.controller;
 import com.example.Springsecurityemail.dto.RegistrationDto;
 import com.example.Springsecurityemail.service.RegistrationService;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/registration")
@@ -14,7 +17,8 @@ public class RegistrationController {
 
     private RegistrationService registrationService;
 
-    public String register(@RequestBody RegistrationDto registrationDto){
+    @PostMapping
+    public String register(@Valid @RequestBody RegistrationDto registrationDto){
         return registrationService.register(registrationDto);
     }
 }
