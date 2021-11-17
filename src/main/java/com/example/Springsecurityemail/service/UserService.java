@@ -1,5 +1,6 @@
 package com.example.Springsecurityemail.service;
 
+import com.example.Springsecurityemail.model.ConfirmationToken;
 import com.example.Springsecurityemail.model.User;
 import com.example.Springsecurityemail.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -19,6 +23,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -34,6 +41,15 @@ public class UserService implements UserDetailsService {
        String encodedPassword = passwordEncoder.encode(user.getPassword());
        user.setPassword(encodedPassword);
        userRepository.save(user);
-        return "works";
+       String token = UUID.randomUUID().toString();
+
+       ConfirmationToken confirmationToken = new ConfirmationToken(
+               token,
+               LocalDateTime.now(),
+               LocalDateTime.now().plusMinutes(15),
+               user
+       );
+       confirmationTokenService.saveConfirmationToken(confirmationToken);
+        return token;
     }
 }
